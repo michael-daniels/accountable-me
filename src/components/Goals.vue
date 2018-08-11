@@ -1,12 +1,12 @@
 <template>
   <div class="">
-    <div class="single-goal" v-for="(item, idx) in goals">
+    <div class="single-goal" v-for="(item, idx) in goalProps">
       {{ item.goal }} <br />
       <div class="" v-if="isTodayAGoalDay(item.when.day, getCurrentDay())">
-        <button class="btn-primary">Complete Goal</button>
+        <button v-on:click="$emit('testingEmit', 'Blehh')" class="btn-primary">Complete Goal</button>
       </div>
       <div class="" v-else="">
-        <button class="btn-secondary" disabled>No Goal for Today</button>
+        <button class="btn-secondary" disabled>Complete Goal</button>
       </div>
 
       <hr />
@@ -27,67 +27,9 @@
 <script>
 export default {
   name: 'Goals',
+  props: ['goalProps'],
   data(){
     return {
-      goals: [
-        {
-          goal:'Go to the gym',
-          when: {
-            day:[
-              {
-                day:'Monday',
-                time:'6:00pm'
-              },
-              {
-                day:'Wednesday',
-                time:'6:00pm'
-              },
-              {
-                day:'Friday',
-                time:'6:00pm'
-              }
-            ],
-            latitude:'blah',
-            longitude:'blahblah'
-          }
-        },
-        {
-          goal:'Go to co-working space',
-          when: {
-            day:[
-              {
-                day:'Monday',
-                time:'6:00pm'
-              },
-              {
-                day:'Thursday',
-                time:'6:00pm'
-              }
-            ],
-            time: '6:00am',
-            latitude:'blah',
-            longitude:'blahblah'
-          }
-        },
-        {
-          goal:'Take Sparky for a walk',
-          when: {
-            day:[
-              {
-                day:'Monday',
-                time:'6:00pm'
-              },
-              {
-                day:'Thursday',
-                time:'6:00pm'
-              }
-            ],
-            time: '6:00am',
-            latitude:'blah',
-            longitude:'blahblah'
-          }
-        },
-      ],
       getCurrentDay: () => {
         let theWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
@@ -97,7 +39,6 @@ export default {
         return theWeek[theDay]
       },
       isTodayAGoalDay: (daysArray, getCurrentDay) => {
-        console.log('Days Array', daysArray)
         let isGoalDay = false
         let dayStr = ''
 
@@ -105,18 +46,15 @@ export default {
           dayStr += daysArray[i].day
         }
 
-
-        console.log('DAY STRING', dayStr)
           if (dayStr.includes(getCurrentDay)) {
             isGoalDay = true
-            console.log(isGoalDay)
           }
         return isGoalDay
+      },
+      testingEmit: () => {
+        return 'Blah'
       }
     }
-  },
-  props: {
-
   }
 }
 
