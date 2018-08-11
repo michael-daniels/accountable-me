@@ -3,7 +3,7 @@
     <div class="single-goal" v-for="(item, idx) in goalProps">
       {{ item.goal }} <br />
       <div class="" v-if="isTodayAGoalDay(item.when.day, getCurrentDay())">
-        <button v-on:click="$emit('testingEmit', 'Blehh')" class="btn-primary">Complete Goal</button>
+        <button v-on:click="compareLocationFunc([item.latitude, item.longitude])" class="btn-primary">Complete Goal</button>
       </div>
       <div class="" v-else="">
         <button class="btn-secondary" disabled>Complete Goal</button>
@@ -27,12 +27,11 @@
 <script>
 export default {
   name: 'Goals',
-  props: ['goalProps'],
+  props: ['goalProps', 'compareLocationFunc'],
   data(){
     return {
       getCurrentDay: () => {
         let theWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-
         var theDate = new Date();
         var theDay = theDate.getDay();
 
@@ -51,13 +50,10 @@ export default {
           }
         return isGoalDay
       },
-      testingEmit: () => {
-        return 'Blah'
-      }
+
     }
   }
 }
-
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

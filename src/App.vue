@@ -2,10 +2,10 @@
   <div id="app">
     {{getLocation(updateUserLocation)}}
     <Header />
-    <span>LATITUDE: </span><div v-text="currentUserLocation.latitude"></div>
+    <!-- <span>LATITUDE: </span><div v-text="currentUserLocation.latitude"></div>
     <span>LONGITUDE: </span><div v-text="currentUserLocation.longitude"></div>
-    <button v-on:click="isAtGoalLocation(testingLocationData)">Check Current Location Against Sample Location</button>
-    <Goals v-bind:goalProps="goals"/>
+    <button v-on:click="isAtGoalLocation(testingLocationData)">Check Current Location Against Sample Location</button> -->
+    <Goals v-bind:goalProps="goals" v-bind:compareLocationFunc="isAtGoalLocation"/>
   </div>
 </template>
 
@@ -40,9 +40,9 @@ export default {
                 time:'6:00pm'
               }
             ],
-            latitude:'blah',
-            longitude:'blahblah'
-          }
+          },
+          latitude:'33.4404',
+          longitude:'-112.0671'
         },
         {
           goal:'Go to co-working space',
@@ -55,12 +55,16 @@ export default {
               {
                 day:'Thursday',
                 time:'6:00pm'
+              },
+              {
+                day:'Friday',
+                time:'6:00pm'
               }
             ],
             time: '6:00am',
-            latitude:'33.44037840000001',
-            longitude:'-112.0671339'
-          }
+          },
+          latitude:'33.44037840000001',
+          longitude:'-112.0671339'
         },
         {
           goal:'Take Sparky for a walk',
@@ -76,9 +80,9 @@ export default {
               }
             ],
             time: '6:00am',
-            latitude:'blah',
-            longitude:'blahblah'
-          }
+          },
+          latitude:'blah',
+          longitude:'blahblah'
         },
       ],
       currentUserLocation: {
