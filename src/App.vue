@@ -24,6 +24,39 @@ export default {
     return {
       goals: [
         {
+          goal:'Home',
+          lastCompleted:'',
+          when: {
+            day:[
+              {
+                day:'Monday',
+                time:'6:00pm'
+              },
+              {
+                day:'Tuesday',
+                time:'6:00pm'
+              },
+              {
+                day:'Wednesday',
+                time:'6:00pm'
+              },
+              {
+                day:'Thursday',
+                time:'6:00pm'
+              },
+              {
+                day:'Friday',
+                time:'6:00pm'
+              }
+            ],
+          },
+          latitude: 33.428410,
+          longitude: -112.233007,
+          mapUrl: function() {
+            return `https://www.google.com/maps/embed/v1/view?key=AIzaSyComtCTHcgK-Hn-t4e_idADPWJgWpI4G4E&center=${this.latitude},${this.longitude}&zoom=17`
+          }
+        },
+        {
           goal:'Go to the gym',
           lastCompleted:'',
           when: {
