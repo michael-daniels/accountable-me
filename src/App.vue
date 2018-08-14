@@ -5,7 +5,7 @@
     <!-- <span>LATITUDE: </span><div v-text="currentUserLocation.latitude"></div>
     <span>LONGITUDE: </span><div v-text="currentUserLocation.longitude"></div>
     <button v-on:click="isAtGoalLocation(testingLocationData)">Check Current Location Against Sample Location</button> -->
-    <Goals v-bind:goalProps="goals" v-bind:compareLocationFunc="isAtGoalLocation"/>
+    <Goals v-bind:goalProps="goals" v-bind:currentUserLocationProps="currentUserLocation" v-bind:compareLocationFunc="isAtGoalLocation"/>
   </div>
 </template>
 
@@ -25,6 +25,7 @@ export default {
       goals: [
         {
           goal:'Go to the gym',
+          lastCompleted:'',
           when: {
             day:[
               {
@@ -41,15 +42,23 @@ export default {
               }
             ],
           },
-          latitude:'33.4404',
-          longitude:'-112.0671'
+          latitude: 33.479278,
+          longitude: -112.217833,
+          mapUrl: function() {
+            return `https://www.google.com/maps/embed/v1/view?key=AIzaSyComtCTHcgK-Hn-t4e_idADPWJgWpI4G4E&center=${this.latitude},${this.longitude}&zoom=17`
+          }
         },
         {
           goal:'Go to co-working space',
+          lastCompleted:'',
           when: {
             day:[
               {
                 day:'Monday',
+                time:'6:00pm'
+              },
+              {
+                day:'Tuesday',
                 time:'6:00pm'
               },
               {
@@ -63,15 +72,23 @@ export default {
             ],
             time: '6:00am',
           },
-          latitude:'33.44037840000001',
-          longitude:'-112.0671339'
+          latitude: 33.4397,
+          longitude: -112.0672,
+          mapUrl: function() {
+            return `https://www.google.com/maps/embed/v1/view?key=AIzaSyComtCTHcgK-Hn-t4e_idADPWJgWpI4G4E&center=${this.latitude}, ${this.longitude}&zoom=17`
+          }
         },
         {
           goal:'Take Sparky for a walk',
+          lastCompleted:'',
           when: {
             day:[
               {
                 day:'Monday',
+                time:'6:00pm'
+              },
+              {
+                day:'Tuesday',
                 time:'6:00pm'
               },
               {
@@ -81,8 +98,11 @@ export default {
             ],
             time: '6:00am',
           },
-          latitude:'blah',
-          longitude:'blahblah'
+          latitude: 33.428130,
+          longitude: -112.230010,
+          mapUrl: function() {
+            return `https://www.google.com/maps/embed/v1/view?key=AIzaSyComtCTHcgK-Hn-t4e_idADPWJgWpI4G4E&center=${this.latitude}, ${this.longitude}&zoom=17`
+          }
         },
       ],
       currentUserLocation: {
@@ -94,8 +114,8 @@ export default {
   },
   methods: {
       updateUserLocation(latitude, longitude) {
-        this.currentUserLocation.latitude = latitude
-        this.currentUserLocation.longitude = longitude
+        this.currentUserLocation.latitude = Number(latitude)
+        this.currentUserLocation.longitude = Number(longitude)
         console.log(this.currentUserLocation)
       },
       getLocation(updateUserLocationFunc) {
@@ -111,9 +131,17 @@ export default {
           alert("Geolocation is not supported by this browser.")
         }
       },
-      isAtGoalLocation(goal) {
+      isAtGoalLocation(goal, item, currentDay) {
         if ((this.currentUserLocation.latitude > goal[0] - .0009 && this.currentUserLocation.latitude < goal[0] + .0009) && (this.currentUserLocation.longitude > goal[1] - .0009 && this.currentUserLocation.longitude < goal[1] + .0009)) {
-          alert('Location Match')
+          let goalClicked = item
+
+          for (let i = 0; i < this.goals.length; i++) {
+            if (this.goals[i].goal === item.goal) {
+              this.goals[i].lastCompleted = currentDay
+            }
+          }
+          console.log(this.goals)
+          //alert('Location Match')
           return true
         } else {
           alert('Not Close Enough to Location')
@@ -126,6 +154,7 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css?family=Varela+Round');
   body {
     background-color:#eeeeee;
     max-width:90%;
