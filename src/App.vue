@@ -2,6 +2,22 @@
   <div id="app">
     {{getLocation(updateUserLocation)}}
     <Header />
+    <form class="add-goal-form" action="" method="">
+      <input class="form-control" type="text" name="goalTitle" v-model:value="newGoal.goal" placeholder="Goal Title">
+      <select class="form-control" name="" v-model:value="newGoal.days" multiple>
+        <option value="Sun">Sunday</option>
+        <option value="Mon">Monday</option>
+        <option value="Tue">Tuesday</option>
+        <option value="Wed">Wednesday</option>
+        <option value="Thurs">Thursday</option>
+        <option value="Fri">Friday</option>
+        <option value="Sat">Saturday</option>
+      </select>
+      <input class="form-control" type="text" name="goalTime" v-model:value="newGoal.when.time" placeholder="Time">
+      <input class="form-control" type="text" name="goalLatitude" v-model:value="newGoal.latitude" placeholder="Latitude">
+      <input class="form-control" type="text" name="goalLongitude" v-model:value="newGoal.longitude" placeholder="Longitude">
+    </form>
+    <button v-on:click="addNewGoal" class="btn-primary form-control add-goal-btn">Add a Goal</button>
     <!-- <span>LATITUDE: </span><div v-text="currentUserLocation.latitude"></div>
     <span>LONGITUDE: </span><div v-text="currentUserLocation.longitude"></div>
     <button v-on:click="isAtGoalLocation(testingLocationData)">Check Current Location Against Sample Location</button> -->
@@ -29,23 +45,23 @@ export default {
           when: {
             day:[
               {
-                day:'Monday',
+                day:'Mon',
                 time:'6:00pm'
               },
               {
-                day:'Tuesday',
+                day:'Tue',
                 time:'6:00pm'
               },
               {
-                day:'Wednesday',
+                day:'Wed',
                 time:'6:00pm'
               },
               {
-                day:'Thursday',
+                day:'Thurs',
                 time:'6:00pm'
               },
               {
-                day:'Friday',
+                day:'Fri',
                 time:'6:00pm'
               }
             ],
@@ -62,15 +78,15 @@ export default {
           when: {
             day:[
               {
-                day:'Monday',
+                day:'Mon',
                 time:'6:00pm'
               },
               {
-                day:'Wednesday',
+                day:'Wed',
                 time:'6:00pm'
               },
               {
-                day:'Friday',
+                day:'Fri',
                 time:'6:00pm'
               }
             ],
@@ -87,19 +103,19 @@ export default {
           when: {
             day:[
               {
-                day:'Monday',
+                day:'Mon',
                 time:'6:00pm'
               },
               {
-                day:'Tuesday',
+                day:'Tue',
                 time:'6:00pm'
               },
               {
-                day:'Thursday',
+                day:'Thurs',
                 time:'6:00pm'
               },
               {
-                day:'Friday',
+                day:'Fri',
                 time:'6:00pm'
               }
             ],
@@ -117,15 +133,15 @@ export default {
           when: {
             day:[
               {
-                day:'Monday',
+                day:'Mon',
                 time:'6:00pm'
               },
               {
-                day:'Tuesday',
+                day:'Tue',
                 time:'6:00pm'
               },
               {
-                day:'Thursday',
+                day:'Thurs',
                 time:'6:00pm'
               }
             ],
@@ -142,10 +158,36 @@ export default {
         latitude:'---',
         longitude:'---'
       },
+      newGoal: {
+        goal:'',
+        lastCompleted:'',
+        days:[],
+        when: {
+          day: [],
+          time:''
+        },
+        latitude: null,
+        longitude: null,
+        mapUrl: function() {
+          return `https://www.google.com/maps/embed/v1/view?key=AIzaSyComtCTHcgK-Hn-t4e_idADPWJgWpI4G4E&center=${this.latitude}, ${this.longitude}&zoom=17`
+        }
+      },
       testingLocationData: [33.440400, -112.067077]
     }
   },
   methods: {
+      addNewGoal() {
+        console.log('button clicked', this.newGoal.days)
+        for (let i = 0; i < this.newGoal.days.length; i++) {
+          this.newGoal.when.day.push({
+            day:this.newGoal.days[i],
+            time:this.newGoal.when.time
+          })
+        }
+        this.newGoal.latitude = Number(this.newGoal.latitude)
+        this.newGoal.longitude = Number(this.newGoal.longitude)
+        this.goals.push(this.newGoal)
+      },
       updateUserLocation(latitude, longitude) {
         this.currentUserLocation.latitude = Number(latitude)
         this.currentUserLocation.longitude = Number(longitude)
@@ -178,6 +220,8 @@ export default {
           return true
         } else {
           alert('Not Close Enough to Location')
+          console.log('No go item', item)
+          console.log('No go goal', goal)
           return false
         }
       }
@@ -194,5 +238,14 @@ export default {
     margin:0 auto;
     text-align:center;
     padding:6vh;
+  }
+  .add-goal-btn {
+    margin-top:25px
+  }
+  .day-select {
+    min-width: 100%
+  }
+  .add-goal-form {
+    display:none;
   }
 </style>

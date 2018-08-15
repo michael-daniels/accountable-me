@@ -84,7 +84,7 @@ export default {
         return sortedArray
       },
       getCurrentDay: () => {
-        let theWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+        let theWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thurs', 'Fri', 'Sat']
         var theDate = new Date();
         var theDay = theDate.getDay();
 
@@ -155,6 +155,9 @@ export default {
   .map-iframe {
     border-radius:50%;
     max-width: 100%
+  }
+  .col-md-2 {
+    text-align: center;
   }
 
 </style>
