@@ -1,7 +1,9 @@
 <template>
   <div id="app">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
     {{getLocation(updateUserLocation)}}
     <Header />
+    <button class="btn-primary add-goal-plus"><span class="plus-square"><i class="far fa-plus-square"></i><span> Add New Goal</span></span></button>
     <form class="add-goal-form" action="" method="">
       <input class="form-control" type="text" name="goalTitle" v-model:value="newGoal.goal" placeholder="Goal Title">
       <select class="form-control" name="" v-model:value="newGoal.days" multiple>
@@ -16,8 +18,8 @@
       <input class="form-control" type="text" name="goalTime" v-model:value="newGoal.when.time" placeholder="Time">
       <input class="form-control" type="text" name="goalLatitude" v-model:value="newGoal.latitude" placeholder="Latitude">
       <input class="form-control" type="text" name="goalLongitude" v-model:value="newGoal.longitude" placeholder="Longitude">
+      <button v-on:click="addNewGoal" class="btn-primary form-control add-goal-btn">Add a Goal</button>
     </form>
-    <button v-on:click="addNewGoal" class="btn-primary form-control add-goal-btn">Add a Goal</button>
     <!-- <span>LATITUDE: </span><div v-text="currentUserLocation.latitude"></div>
     <span>LONGITUDE: </span><div v-text="currentUserLocation.longitude"></div>
     <button v-on:click="isAtGoalLocation(testingLocationData)">Check Current Location Against Sample Location</button> -->
@@ -158,6 +160,7 @@ export default {
         latitude:'---',
         longitude:'---'
       },
+      addGoalFormHidden: true,
       newGoal: {
         goal:'',
         lastCompleted:'',
@@ -220,8 +223,6 @@ export default {
           return true
         } else {
           alert('Not Close Enough to Location')
-          console.log('No go item', item)
-          console.log('No go goal', goal)
           return false
         }
       }
@@ -247,5 +248,14 @@ export default {
   }
   .add-goal-form {
     display:none;
+  }
+  .plus-square {
+    font-size: 18px;
+    font-family:Baloo
+  }
+  .add-goal-plus {
+    margin-top: 25px;
+    padding: 10px 25px;
+    border-radius: 5px;
   }
 </style>

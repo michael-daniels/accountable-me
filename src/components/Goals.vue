@@ -41,6 +41,11 @@
               </div>
             </div>
           </div>
+          <div class="row edit-delete-row">
+            <div class="edit-icon col-6"><i class="far fa-edit"></i> edit</div>
+            <div class="delete-icon col-6"><i class="far fa-trash-alt"></i> delete</div>
+          </div>
+
         </div>
       </div>
 
@@ -158,6 +163,18 @@ export default {
   }
   .col-md-2 {
     text-align: center;
+  }
+  .fa-trash-alt {
+    font-size: 20px;
+    color:orange;
+    margin-right:4px;
+  }
+  .fa-edit {
+    font-size: 18px;
+    color:green
+  }
+  .edit-delete-row {
+    margin-top:25px;
   }
 
 </style>
